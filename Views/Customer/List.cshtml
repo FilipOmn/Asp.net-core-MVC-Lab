@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Lab4_MVC.Models.Customer>
+
+<h1>All customers</h1>
+<hr />
+@foreach(var customer in Model)
+            {
+                <div>
+                    <ul>
+                        <li>
+                            <a asp-controller="Customer" asp-action="Details" asp-route-id="@customer.CustomerId">@customer.FirstName @customer.LastName</a>
+                        </li>
+                    </ul>
+                </div>
+            }
+
+<form method="post">
+    <button class="btn btn-primary" asp-controller="Customer" asp-action="Create">Add Customer</button>
+</form>

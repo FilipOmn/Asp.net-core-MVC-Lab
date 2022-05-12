@@ -1,0 +1,58 @@
+﻿@model Lab4_MVC.ViewModels.CustomerBookViewModel
+@foreach(var item in Model.CustomerBooks) { }
+@foreach(var item in Model.Books) { }
+
+<div>
+    <h1>@Model.Customer.FirstName @Model.Customer.LastName</h1>
+
+    <p><strong>Email:</strong> @Model.Customer.Email</p>
+    <p><strong>Phone:</strong> @Model.Customer.PhoneNumber</p>
+
+    <form method="post">
+        <button class="btn btn-primary" asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.Customer.CustomerId">Edit customer details</button>
+    </form>
+    <br />
+    <form method="post">
+        <button class="btn btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-id="@Model.Customer.CustomerId">Remove customer</button>
+    </form>
+    <br />
+
+    <h2>Rent history</h2>
+    @{
+        if (Model.Customer.CustomerBooks == null)
+        {
+            <p>This customer has not rented any books recently!</p>
+        }
+        else
+        {
+            <ul>
+                @foreach (var customerbook in Model.Customer.CustomerBooks)
+                {
+                    <li>
+                        <strong>Title:</strong> @customerbook.Book.Title<br />
+                        <strong>Author:</strong> @customerbook.Book.Author<br />
+                        <strong>Description:</strong> @customerbook.Book.Description<br />
+                        <strong>Pages:</strong> @customerbook.Book.Pages<br /><br />
+
+                        <strong>Rented:</strong> @customerbook.Rented.ToString("yyyy/MM/dd")<br />
+                        <strong>Returned:</strong> @{
+                            if (customerbook.IsReturned == true)
+                            {
+                                <text>
+                                    Yes<br />
+                                    <strong>Date:</strong> @customerbook.Returned.ToString("yyyy/MM/dd")
+                                </text>
+                            }
+                            else
+                            {
+                                <text>No</text>
+                            }
+                        }
+                    </li>
+                    <br />
+                }
+            </ul>
+        }
+    }
+</div>
+
